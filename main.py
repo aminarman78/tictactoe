@@ -52,10 +52,15 @@ def evaluate(board):
         
     return result
 
-def play_game():
+def play_game(strat):
     board = create_board()
     result = 0
     counter = 0
+    
+    if strat:
+        place(board, 1, (1,1))
+        counter += 1
+        
     while result == 0:
         random_place(board, counter % 2 + 1)
         result = evaluate(board)
@@ -63,13 +68,14 @@ def play_game():
 
     return result
 
+    
 start = time.time()
-results = []
+results = [[],[]]
 for i in range(10000):
-    results.append(play_game())
+    results[0].append(play_game(False))
+    results[1].append(play_game(True))
     
 plt.hist(results)
 
 stop = time.time()
 print(stop - start)
-
